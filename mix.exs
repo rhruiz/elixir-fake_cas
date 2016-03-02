@@ -1,13 +1,16 @@
 defmodule FakeCas.Mixfile do
   use Mix.Project
 
+  def version, do: "1.0.0"
+
   def project do
     [app: :fake_cas,
-     version: "1.0.0",
+     version: version,
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package,
+     description: "A Cas server stub",
      docs: [
        extras: ["README.md", "CONTRIBUTING.md", "LICENSE.md"]
      ],
@@ -20,7 +23,7 @@ defmodule FakeCas.Mixfile do
      maintainers: ["Ricardo Hermida Ruiz"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/rhruiz/elixir-fake_cas",
-              "Docs" => "https://rhruiz.github.io/elixir-fake_cas"}
+              "Docs" => "https://hexdocs.pm/fake_cas/#{version}"}
    ]
   end
 

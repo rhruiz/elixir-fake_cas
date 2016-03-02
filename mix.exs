@@ -19,7 +19,7 @@ defmodule FakeCas.Mixfile do
 
   def package do
    [
-     files: ["lib", "README.md", "LICENSE.md"],
+     files: ["mix.exs", "lib", "README.md", "LICENSE.md"],
      maintainers: ["Ricardo Hermida Ruiz"],
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/rhruiz/elixir-fake_cas",

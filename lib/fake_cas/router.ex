@@ -46,11 +46,9 @@ defmodule FakeCas.Router do
 
   post "/serviceValidate" do
     if conn.params["ticket"] == FakeCas.valid_st && conn.params["service"] do
-      {:ok, content} = File.read("lib/fake_cas/fixtures/success.xml")
-      conn |> send_resp(200, content)
+      conn |> send_resp(200, FakeCas.Responses.success)
     else
-      {:ok, content} = File.read("lib/fake_cas/fixtures/failure.xml")
-      conn |> send_resp(200, content)
+      conn |> send_resp(200, FakeCas.Responses.failure)
     end
   end
 

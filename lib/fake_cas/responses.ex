@@ -16,8 +16,8 @@ defmodule FakeCas.Responses do
     <cas:serviceResponse xmlns:cas="http://www.yale.edu/tp/cas">
       <cas:authenticationSuccess>
         <cas:user>example</cas:user>
-        <cas:type>Customer</cas:type>
         <cas:attributes>
+          <cas:type>Customer</cas:type>
           <cas:authorities>[ACME_ADMIN]</cas:authorities>
           <cas:cn>John Smith</cas:cn>
         </cas:attributes>

@@ -44,6 +44,14 @@ defmodule FakeCas.Router do
     end
   end
 
+  get "/serviceValidate" do
+    if conn.params["ticket"] == FakeCas.valid_st && conn.params["service"] do
+      conn |> send_resp(200, FakeCas.Responses.success)
+    else
+      conn |> send_resp(200, FakeCas.Responses.failure)
+    end
+  end
+
   post "/serviceValidate" do
     if conn.params["ticket"] == FakeCas.valid_st && conn.params["service"] do
       conn |> send_resp(200, FakeCas.Responses.success)

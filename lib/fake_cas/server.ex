@@ -15,7 +15,7 @@ defmodule FakeCas.Server do
     :erlang.port_close(s)
     {:ok, socket} = :ranch_tcp.listen(port: port)
 
-    ref = make_ref
+    ref = make_ref()
 
     cowboy_opts = [ref: ref, acceptors: 5, port: port, socket: socket]
     {:ok, cowboy_pid} = Plug.Adapters.Cowboy.http(FakeCas.Router, [], cowboy_opts)

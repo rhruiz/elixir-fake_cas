@@ -10,7 +10,7 @@ defmodule FakeCas.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      package: package(),
-     description: "A Cas server stub",
+     description: "A Cas server stub with deterministic responses",
      docs: [
        extras: ["README.md", "CONTRIBUTING.md", "LICENSE.md"]
      ],
@@ -35,7 +35,6 @@ defmodule FakeCas.Mixfile do
     [
       {:ex_doc, "~> 0.11", only: :dev},
       {:earmark, "~> 1.0", only: :dev},
-      {:bypass, "~> 0.1"},
       {:cowboy, "~> 1.0"},
       {:plug, "~> 1.1"},
       {:httpoison, "~> 0.8", only: :test},

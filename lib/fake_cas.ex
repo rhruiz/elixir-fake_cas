@@ -24,20 +24,20 @@ defmodule FakeCas do
 
   @name :FakeCasServer
 
-  @spec valid_username :: String.t
   @doc "The only username `FakeCas` server will consider valid"
+  @spec valid_username :: String.t
   def valid_username, do: "example"
 
-  @spec valid_password :: String.t
   @doc "The only password `FakeCas` server will consider valid"
+  @spec valid_password :: String.t
   def valid_password, do: "secret"
 
-  @spec valid_tgt :: String.t
   @doc "The only TGT `FakeCas` server will consider valid"
+  @spec valid_tgt :: String.t
   def valid_tgt, do: "TGT-example-abcd"
 
-  @spec valid_st :: String.t
   @doc "The only ST `FakeCas` server will consider valid"
+  @spec valid_st :: String.t
   def valid_st, do: "ST-example-1234"
 
   @doc false
@@ -58,5 +58,12 @@ defmodule FakeCas do
   end
 
   @doc "Returns the TCP port FakeCas is running on"
+  @spec port() :: non_neg_integer()
   def port, do: FakeCas.Server.port(@name)
+
+  @doc "Stops the server"
+  @spec stop() :: none()
+  def stop do
+    FakeCas.Server.stop(@name)
+  end
 end

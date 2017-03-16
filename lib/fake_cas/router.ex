@@ -2,6 +2,7 @@ defmodule FakeCas.Router do
   @moduledoc "Application router for the `FakeCas` server"
 
   use Plug.Router
+
   require Logger
 
   plug Plug.Logger
@@ -64,8 +65,8 @@ defmodule FakeCas.Router do
     send_resp(conn, 404, "oops")
   end
 
-  @spec url(Plug.Conn.t) :: Plug.Conn.t
   @doc false
+  @spec url(Plug.Conn.t) :: Plug.Conn.t
   def url(conn) do
     query_string =
       conn.query_params

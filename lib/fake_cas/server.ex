@@ -3,7 +3,8 @@ defmodule FakeCas.Server do
 
   use GenServer
 
-  @doc false
+  @doc "Starts a FakeCas.Server registered with the given name"
+  @spec start_link(String.t) :: GenServer.on_start
   def start_link(name) do
     GenServer.start_link(__MODULE__, :ok, name: name)
   end
@@ -22,12 +23,18 @@ defmodule FakeCas.Server do
     {:ok, [cowboy_pid: cowboy_pid, port: port]}
   end
 
-  @doc false
+  @doc "Stops the server running on pid"
+  @spec stop(GenServer.server) :: :ok
+  def stop(pid) do
+    GenServer.stop(pid, :normal)
+  end
+
+  @doc "Returns the port the server is bound to"
+  @spec port(GenServer.server) :: non_neg_integer()
   def port(pid) do
     GenServer.call(pid, {:port})
   end
 
-  @doc false
   def handle_call({:port}, _from, state) do
     {:reply, state[:port], state}
   end

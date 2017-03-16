@@ -1,4 +1,10 @@
 defmodule FakeCas.Responses do
+  @moduledoc """
+  Module with authentcation respose strings
+  """
+
+  @doc "Response for an authentication failure"
+  @spec failure() :: String.t
   def failure do
     """
     <?xml version="1.0"?>
@@ -10,6 +16,8 @@ defmodule FakeCas.Responses do
     """
   end
 
+  @doc "Response for a authentication success"
+  @spec success() :: String.t
   def success do
     """
     <?xml version="1.0"?>

@@ -20,8 +20,6 @@ defmodule FakeCas do
 
   """
 
-  use Application
-
   @name :FakeCasServer
 
   @doc "The only username `FakeCas` server will consider valid"
@@ -42,19 +40,27 @@ defmodule FakeCas do
 
   @doc false
   def start do
-    start(:a, :b)
+    start_link()
   end
 
   @doc false
-  def start(_type, _args) do
-    import Supervisor.Spec, warn: false
+  def start_link do
+    start_link(name: @name)
+  end
 
+  @doc false
+  def start_link(opts) do
     children = [
-      worker(FakeCas.Server, [@name])
+      {FakeCas.Server, opts}
     ]
 
-    opts = [strategy: :one_for_one, name: FakeCas.Supervisor]
-    Supervisor.start_link(children, opts)
+    add_name = fn
+      (opts, nil) -> opts
+      (opts, name) -> Keyword.merge(opts, name: Module.concat(name, Supervisor))
+    end
+
+    Supervisor.start_link(children,
+      add_name.([strategy: :one_for_one], opts[:name]))
   end
 
   @doc "Returns the TCP port FakeCas is running on"
@@ -64,6 +70,6 @@ defmodule FakeCas do
   @doc "Stops the server"
   @spec stop() :: none()
   def stop do
-    FakeCas.Server.stop(@name)
+    Supervisor.stop(Module.concat(@name, Supervisor))
   end
 end

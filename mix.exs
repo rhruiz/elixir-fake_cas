@@ -1,7 +1,7 @@
 defmodule FakeCas.Mixfile do
   use Mix.Project
 
-  def version, do: "1.3.1"
+  def version, do: "1.3.2"
 
   def project do
     [app: :fake_cas,

@@ -48,18 +48,27 @@ defmodule FakeCas do
     start_link(name: @name)
   end
 
+  defmacro children(opts) do
+    if System.version |> Version.parse! |> Version.match?(">= 1.5.0") do
+      quote do
+        [{FakeCas.Server, unquote(opts)}]
+      end
+    else
+      quote do
+        import Supervisor.Spec, warn: false
+        [worker(FakeCas.Server, unquote([opts]))]
+      end
+    end
+  end
+
   @doc false
   def start_link(opts) do
-    children = [
-      {FakeCas.Server, opts}
-    ]
-
     add_name = fn
       (opts, nil) -> opts
       (opts, name) -> Keyword.merge(opts, name: Module.concat(name, Supervisor))
     end
 
-    Supervisor.start_link(children,
+    Supervisor.start_link(children(opts),
       add_name.([strategy: :one_for_one], opts[:name]))
   end
 

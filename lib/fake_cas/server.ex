@@ -4,14 +4,13 @@ defmodule FakeCas.Server do
   use GenServer
 
   @doc "Starts a FakeCas.Server registered with the given name"
-  @spec start_link(String.t) :: GenServer.on_start
+  @spec start_link(String.t()) :: GenServer.on_start()
   def start_link(opts) do
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
   @doc false
   def init(:ok) do
-
     {:ok, s} = :ranch_tcp.listen(port: 0)
     {:ok, port} = :inet.port(s)
     :erlang.port_close(s)
@@ -27,7 +26,7 @@ defmodule FakeCas.Server do
   end
 
   @doc "Stops the server running on pid"
-  @spec stop(GenServer.server) :: :ok
+  @spec stop(GenServer.server()) :: :ok
   def stop(pid) do
     GenServer.stop(pid, :normal)
   end
@@ -39,7 +38,7 @@ defmodule FakeCas.Server do
   end
 
   @doc "Returns the port the server is bound to"
-  @spec port(GenServer.server) :: non_neg_integer()
+  @spec port(GenServer.server()) :: non_neg_integer()
   def port(pid) do
     GenServer.call(pid, {:port})
   end

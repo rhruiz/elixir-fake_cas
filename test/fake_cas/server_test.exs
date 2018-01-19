@@ -3,7 +3,7 @@ defmodule FakeCas.ServerTest do
 
   setup do
     length = 32
-    name =  :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
+    name = :crypto.strong_rand_bytes(length) |> Base.url_encode64() |> binary_part(0, length)
     {:ok, pid} = FakeCas.Server.start_link(name: :"#{name}")
     {:ok, pid: pid}
   end

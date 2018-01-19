@@ -23,19 +23,19 @@ defmodule FakeCas do
   @name :FakeCasServer
 
   @doc "The only username `FakeCas` server will consider valid"
-  @spec valid_username :: String.t
+  @spec valid_username :: String.t()
   def valid_username, do: "example"
 
   @doc "The only password `FakeCas` server will consider valid"
-  @spec valid_password :: String.t
+  @spec valid_password :: String.t()
   def valid_password, do: "secret"
 
   @doc "The only TGT `FakeCas` server will consider valid"
-  @spec valid_tgt :: String.t
+  @spec valid_tgt :: String.t()
   def valid_tgt, do: "TGT-example-abcd"
 
   @doc "The only ST `FakeCas` server will consider valid"
-  @spec valid_st :: String.t
+  @spec valid_st :: String.t()
   def valid_st, do: "ST-example-1234"
 
   @doc false
@@ -49,7 +49,7 @@ defmodule FakeCas do
   end
 
   defmacro children(opts) do
-    if System.version |> Version.parse! |> Version.match?(">= 1.5.0") do
+    if System.version() |> Version.parse!() |> Version.match?(">= 1.5.0") do
       quote do
         [{FakeCas.Server, unquote(opts)}]
       end
@@ -64,12 +64,11 @@ defmodule FakeCas do
   @doc false
   def start_link(opts) do
     add_name = fn
-      (opts, nil) -> opts
-      (opts, name) -> Keyword.merge(opts, name: Module.concat(name, Supervisor))
+      opts, nil -> opts
+      opts, name -> Keyword.merge(opts, name: Module.concat(name, Supervisor))
     end
 
-    Supervisor.start_link(children(opts),
-      add_name.([strategy: :one_for_one], opts[:name]))
+    Supervisor.start_link(children(opts), add_name.([strategy: :one_for_one], opts[:name]))
   end
 
   @doc "Returns the TCP port FakeCas is running on"

@@ -1,7 +1,7 @@
 defmodule FakeCas.Mixfile do
   use Mix.Project
 
-  def version, do: "1.3.2"
+  def version, do: "1.4.0"
 
   def project do
     [
@@ -32,15 +32,16 @@ defmodule FakeCas.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :plug]]
   end
 
   defp deps do
     [
       {:ex_doc, "~> 0.11", only: :dev},
       {:earmark, "~> 1.0", only: :dev},
-      {:cowboy, "~> 1.0"},
+      {:cowboy, "~> 1.0 or ~> 2.0"},
       {:plug, "~> 1.1"},
+      {:plug_cowboy, "~> 1.0 or ~> 2.0"},
       {:httpoison, "~> 0.8 or ~> 1.0", only: :test}
     ]
   end

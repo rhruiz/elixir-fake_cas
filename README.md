@@ -10,12 +10,12 @@ The package can be installed as:
 
   ```elixir
   def deps do
-    [{:fake_cas, "~> 1.2.0"}]
+    [{:fake_cas, "~> 1.4"}]
   end
   ```
 
 
-  2. Ensure fake_cas is started before your application:
+  2. Ensure fake_cas is started before your application if you are using Elixir < 1.5:
 
   ```elixir
   def application do

@@ -11,17 +11,13 @@ defmodule FakeCas.Server do
 
   @doc false
   def init(:ok) do
-    {:ok, s} = :ranch_tcp.listen(port: 0)
-    {:ok, port} = :inet.port(s)
-    :erlang.port_close(s)
-    {:ok, socket} = :ranch_tcp.listen(port: port)
-
     ref = make_ref()
 
     Process.flag(:trap_exit, true)
 
-    cowboy_opts = [ref: ref, acceptors: 5, port: port, socket: socket]
-    {:ok, cowboy_pid} = Plug.Adapters.Cowboy.http(FakeCas.Router, [], cowboy_opts)
+    cowboy_opts = [ref: ref, port: 0]
+    {:ok, cowboy_pid} = Plug.Cowboy.http(FakeCas.Router, [], cowboy_opts)
+    port = :ranch.get_port(ref)
     {:ok, [cowboy_ref: ref, cowboy_pid: cowboy_pid, port: port]}
   end
 
@@ -34,7 +30,7 @@ defmodule FakeCas.Server do
   def terminate(reason, state) when reason in [:shutdown, :normal] do
     state
     |> Keyword.get(:cowboy_ref)
-    |> Plug.Adapters.Cowboy.shutdown()
+    |> Plug.Cowboy.shutdown()
   end
 
   @doc "Returns the port the server is bound to"

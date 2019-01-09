@@ -10,9 +10,8 @@ defmodule FakeCas.Router do
 
   plug(
     Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
-    pass: ["*/*"],
-    json_decoder: Poison
+    parsers: [:urlencoded, :multipart],
+    pass: ["*/*"]
   )
 
   plug(:match)
